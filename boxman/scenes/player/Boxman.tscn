@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[node name="Boxman" type="KinematicBody2D" index="0"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+
+shape = SubResource( 1 )
+
+[node name="RaycastGrounded0" type="RayCast2D" parent="." index="2"]
+
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, 50 )
+collision_mask = 1
+
+[node name="RaycastGrounded1" type="RayCast2D" parent="." index="3"]
+
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, 50 )
+collision_mask = 1
+
+[node name="Node" type="Node" parent="." index="4"]
+
+

@@ -1,0 +1,13 @@
+[gd_scene format=2]
+
+[node name="TitleScreen" type="Node" index="0"]
+
+[node name="Cursor" type="Node2D" parent="." index="0"]
+
+[node name="Sprite" type="Sprite" parent="Cursor" index="0"]
+
+[node name="Background" type="Node2D" parent="." index="1"]
+
+[node name="Sprite" type="Sprite" parent="Background" index="0"]
+
+
