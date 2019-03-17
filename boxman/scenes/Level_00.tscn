@@ -7,18 +7,21 @@
 [ext_resource path="res://scenes/TestFloor.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/InputInterpreter.tscn" type="PackedScene" id=6]
 
-[node name="Level_00" type="Node2D"]
+[node name="Level_00" type="Node2D" index="0"]
 
+pause_mode = 2
 script = ExtResource( 1 )
+_sections_unfolded = [ "Pause" ]
 
 [node name="PauseMenu" parent="." index="0" instance=ExtResource( 2 )]
 
 z_index = 3
-_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
+_sections_unfolded = [ "Pause" ]
 
 [node name="PausableObjects" type="Node" parent="." index="1"]
 
 pause_mode = 1
+editor/display_folded = true
 _sections_unfolded = [ "Pause" ]
 
 [node name="Boxman" parent="PausableObjects" index="0" instance=ExtResource( 3 )]
@@ -40,5 +43,7 @@ z_index = 1
 _sections_unfolded = [ "Pause", "Transform", "Z Index" ]
 
 [node name="InputInterpreter" parent="." index="2" instance=ExtResource( 6 )]
+
+_sections_unfolded = [ "Pause" ]
 
 

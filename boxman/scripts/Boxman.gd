@@ -82,7 +82,6 @@ func move(direction, delta):
 			grounded_lock = true
 			jump_ended	= true
 	else:
-		print("NOT GROUNDED")
 		horizontal_speed = MAX_RUN_SPEED * direction
 		if(input_interpreter.jump_release() and !jump_ended):
 			jump_ended = true
