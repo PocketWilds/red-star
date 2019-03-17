@@ -13,6 +13,7 @@ var input_interpreter
 
 onready var raycast_terrain = get_node("RaycastTerrain")
 onready var bullet_scene = preload("../scenes/Bullet.tscn")
+onready var revolving_chambers = get_node("RevolvingChambers")
 onready var bullets_container = get_node("Bullets")
 
 var move_vector
@@ -117,10 +118,12 @@ func check_if_grounded():
 	return is_grounded
 	
 func shoot_bullet():
-	if(bullets_container.get_child_count() < 6):
+	if(revolving_chambers.fire()):
 		var new_bullet = bullet_scene.instance()
 		bullets_container.add_child( new_bullet )
 		new_bullet.position = self.position + Vector2(60, 0) * (modifier_directional_vector)
 		new_bullet.z_index = 1
 	#	new_bullet.rotation = PI/4
 		new_bullet._initialize(Vector2(modifier_directional_vector,0),Vector2(0,0))
+	else:
+		pass

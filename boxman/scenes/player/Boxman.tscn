@@ -1,14 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scripts/Boxman.gd" type="Script" id=1]
 [ext_resource path="res://images/sprites/boxman_stand__000.png" type="Texture" id=2]
+[ext_resource path="res://scenes/RevolverChambers.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Boxman" type="KinematicBody2D" index="0"]
+[node name="Boxman" type="KinematicBody2D"]
 
 input_pickable = false
 collision_layer = 1
@@ -44,6 +45,8 @@ cast_to = Vector2( 80, 1 )
 collision_mask = 1
 _sections_unfolded = [ "Transform" ]
 
-[node name="Bullets" type="Node" parent="." index="4"]
+[node name="RevolvingChambers" parent="." index="4" instance=ExtResource( 3 )]
+
+[node name="Bullets" type="Node" parent="." index="5"]
 
 
