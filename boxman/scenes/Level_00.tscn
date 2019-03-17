@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scripts/Level_00.gd" type="Script" id=1]
+[ext_resource path="res://scenes/ui/PauseMenu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/player/Boxman.tscn" type="PackedScene" id=3]
+[ext_resource path="res://images/backgrounds/background_level_00.png" type="Texture" id=4]
+[ext_resource path="res://scenes/TestFloor.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/InputInterpreter.tscn" type="PackedScene" id=6]
+
+[node name="Level_00" type="Node2D" index="0"]
+
+pause_mode = 2
+script = ExtResource( 1 )
+_sections_unfolded = [ "Pause" ]
+
+[node name="PauseMenu" parent="." index="0" instance=ExtResource( 2 )]
+
+z_index = 3
+_sections_unfolded = [ "Pause" ]
+
+[node name="PausableObjects" type="Node" parent="." index="1"]
+
+pause_mode = 1
+editor/display_folded = true
+_sections_unfolded = [ "Pause" ]
+
+[node name="Boxman" parent="PausableObjects" index="0" instance=ExtResource( 3 )]
+
+position = Vector2( 950, 540 )
+z_index = 1
+_sections_unfolded = [ "Pause", "Transform", "Z Index" ]
+
+[node name="Background" type="Sprite" parent="PausableObjects" index="1"]
+
+position = Vector2( 950, 540 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Pause", "Transform" ]
+
+[node name="Terrain" parent="PausableObjects" index="2" instance=ExtResource( 5 )]
+
+position = Vector2( 950, 800 )
+z_index = 1
+_sections_unfolded = [ "Pause", "Transform", "Z Index" ]
+
+[node name="InputInterpreter" parent="." index="2" instance=ExtResource( 6 )]
+
+_sections_unfolded = [ "Pause" ]
+
+
