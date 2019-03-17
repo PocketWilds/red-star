@@ -1,11 +1,27 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://images/backgrounds/pause_menu.png" type="Texture" id=1]
+[ext_resource path="res://images/sprites/cursor_start_menu.png" type="Texture" id=2]
 
 [node name="PauseMenu" type="Node2D" index="0"]
 
+visible = false
+position = Vector2( 950, 540 )
+_sections_unfolded = [ "Transform" ]
+
 [node name="Sprite" type="Sprite" parent="." index="0"]
+
+texture = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Cursor" type="Node2D" parent="." index="1"]
 
+position = Vector2( -157, -114 )
+z_index = 1
+_sections_unfolded = [ "Transform", "Z Index" ]
+
 [node name="Sprite" type="Sprite" parent="Cursor" index="0"]
+
+texture = ExtResource( 2 )
 
 
