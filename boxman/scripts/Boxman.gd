@@ -11,10 +11,10 @@ var GRAVITY = 5500
 
 var input_interpreter
 
-onready var raycast_terrain = get_node("RaycastTerrain")
 onready var bullet_scene = preload("../scenes/Bullet.tscn")
 onready var revolving_chambers = get_node("RevolvingChambers")
 onready var bullets_container = get_node("Bullets")
+onready var sprites = get_node("Sprites")
 
 var move_vector
 var jump_timer
@@ -51,11 +51,18 @@ func _physics_process(delta):
 	pass
 	
 func _read_inputs():
-	
 	if(input_interpreter.move_left()):
 		modifier_directional_vector = -1
+		if(!sprites.is_flipped_h()):
+			sprites.set_flip_h(true)
+			for sprite in sprites.get_children():
+				sprite.set_flip_h(true)
 	else: if(input_interpreter.move_right()):
 		modifier_directional_vector = 1
+		if(sprites.is_flipped_h()):
+			sprites.set_flip_h(false)			
+			for sprite in sprites.get_children():
+				sprite.set_flip_h(false)
 	else:
 		return 0
 	return modifier_directional_vector
