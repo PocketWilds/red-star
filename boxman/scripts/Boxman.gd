@@ -51,6 +51,7 @@ func _physics_process(delta):
 	pass
 	
 func _read_inputs():
+	var is_moving_h = true
 	if(input_interpreter.move_left()):
 		modifier_directional_vector = -1
 		if(!sprites.is_flipped_h()):
@@ -64,8 +65,20 @@ func _read_inputs():
 			for sprite in sprites.get_children():
 				sprite.set_flip_h(false)
 	else:
+		is_moving_h = false
+	
+	var indicator_directional = sprites.get_node("IndicatorDirection")
+	if(input_interpreter.angle_up()):
+		indicator_directional.rotation = -45 * modifier_directional_vector
+	else: if(input_interpreter.angle_down()):
+		indicator_directional.rotation = 45 * modifier_directional_vector
+	else:
+		indicator_directional.rotation = 0
+	
+	if(is_moving_h):
+		return modifier_directional_vector
+	else:
 		return 0
-	return modifier_directional_vector
 	
 
 func move(direction, delta):

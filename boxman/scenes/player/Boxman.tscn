@@ -55,5 +55,6 @@ texture = ExtResource( 3 )
 [node name="IndicatorDirection" type="Sprite" parent="Sprites" index="1"]
 
 texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
 
 
