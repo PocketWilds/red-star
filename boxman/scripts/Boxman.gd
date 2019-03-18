@@ -24,6 +24,8 @@ var grounded_lock
 var fire_lock
 var jump_ended
 var modifier_directional_vector
+var is_angle_up
+var is_angle_down
 #var 
 
 func _init():
@@ -32,6 +34,8 @@ func _init():
 	jump_ended = true
 	jump_timer = 0
 	modifier_directional_vector = 1
+	is_angle_up = false
+	is_angle_down = false
 	pass
 
 func setup(new_input_interpreter):
@@ -69,11 +73,15 @@ func _read_inputs():
 	
 	var indicator_directional = sprites.get_node("IndicatorDirection")
 	if(input_interpreter.angle_up()):
+		is_angle_up = true
 		indicator_directional.rotation = -45 * modifier_directional_vector
 	else: if(input_interpreter.angle_down()):
+		is_angle_down = true
 		indicator_directional.rotation = 45 * modifier_directional_vector
 	else:
 		indicator_directional.rotation = 0
+		is_angle_up = false
+		is_angle_down = false
 	
 	if(is_moving_h):
 		return modifier_directional_vector
@@ -140,10 +148,28 @@ func check_if_grounded():
 func shoot_bullet():
 	if(revolving_chambers.fire()):
 		var new_bullet = bullet_scene.instance()
+		var modifier_angle
 		bullets_container.add_child( new_bullet )
-		new_bullet.position = self.position + Vector2(60, 0) * (modifier_directional_vector)
-		new_bullet.z_index = 1
-	#	new_bullet.rotation = PI/4
-		new_bullet._initialize(Vector2(modifier_directional_vector,0),Vector2(0,0))
+		if(is_angle_up):
+			new_bullet.position = self.position + Vector2(60 * modifier_directional_vector, -60)
+			new_bullet.z_index = 1
+			modifier_angle = -1 * modifier_directional_vector * PI / 4
+			new_bullet.rotation = modifier_angle
+			new_bullet._initialize(Vector2(modifier_directional_vector,0).rotated(modifier_angle),Vector2(0,0))
+		else: if (is_angle_down):
+			new_bullet.position = self.position + Vector2(60 * (modifier_directional_vector), 60)
+			new_bullet.z_index = 1
+			modifier_angle = modifier_directional_vector * PI / 4
+			new_bullet.rotation = modifier_angle
+			new_bullet._initialize(Vector2(modifier_directional_vector,0).rotated(modifier_angle),Vector2(0,0))
+		else:
+			new_bullet.position = self.position + Vector2(60, 0) * (modifier_directional_vector)
+			new_bullet.z_index = 1
+			new_bullet._initialize(Vector2(modifier_directional_vector,0),Vector2(0,0))
+		if(sprites.is_flipped_h()):
+			var bullet_sprite = new_bullet.get_node("Sprite")
+			var bullet_sprite_debug = new_bullet.get_node("Sprite/debug_direction")
+			bullet_sprite.set_flip_h(true)
+			bullet_sprite_debug.set_flip_h(true)
 	else:
 		pass
