@@ -26,7 +26,7 @@ func read_inputs():
 	if(is_paused):
 		if (Input.is_action_just_pressed("jump")):
 			select_option(cursor_pos)
-		if (Input.is_action_just_pressed("aim_up")):
+		if (Input.is_action_just_pressed("look_up")):
 			cursor_pos -= 1
 		else: if (Input.is_action_just_pressed("crouch")):
 			cursor_pos += 1
