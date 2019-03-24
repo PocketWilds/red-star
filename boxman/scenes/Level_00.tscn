@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/Level_00.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/PauseMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/player/Boxman.tscn" type="PackedScene" id=3]
 [ext_resource path="res://images/backgrounds/background_level_00.png" type="Texture" id=4]
 [ext_resource path="res://scenes/TestFloor.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/InputInterpreter.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/TestWall.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/InputInterpreter.tscn" type="PackedScene" id=7]
 
 [node name="Level_00" type="Node2D" index="0"]
 
@@ -21,7 +22,6 @@ _sections_unfolded = [ "Pause", "Transform" ]
 [node name="PausableObjects" type="Node" parent="." index="1"]
 
 pause_mode = 1
-editor/display_folded = true
 _sections_unfolded = [ "Pause" ]
 
 [node name="Boxman" parent="PausableObjects" index="0" instance=ExtResource( 3 )]
@@ -36,13 +36,31 @@ position = Vector2( 950, 540 )
 texture = ExtResource( 4 )
 _sections_unfolded = [ "Pause", "Transform" ]
 
-[node name="Terrain" parent="PausableObjects" index="2" instance=ExtResource( 5 )]
+[node name="Terrain" type="Node2D" parent="PausableObjects" index="2"]
 
-position = Vector2( 950, 800 )
-z_index = 1
-_sections_unfolded = [ "Pause", "Transform", "Z Index" ]
+_sections_unfolded = [ "Transform" ]
 
-[node name="InputInterpreter" parent="." index="2" instance=ExtResource( 6 )]
+[node name="TestFloor0" parent="PausableObjects/Terrain" index="0" instance=ExtResource( 5 )]
+
+position = Vector2( 450, 800 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestFloor1" parent="PausableObjects/Terrain" index="1" instance=ExtResource( 5 )]
+
+position = Vector2( 1052, 800 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestFloor2" parent="PausableObjects/Terrain" index="2" instance=ExtResource( 5 )]
+
+position = Vector2( 1654, 800 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestWall0" parent="PausableObjects/Terrain" index="3" instance=ExtResource( 6 )]
+
+position = Vector2( 1700, 200 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="InputInterpreter" parent="." index="2" instance=ExtResource( 7 )]
 
 _sections_unfolded = [ "Pause" ]
 

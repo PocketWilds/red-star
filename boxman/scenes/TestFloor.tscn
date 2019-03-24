@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/Floor.tscn" type="PackedScene" id=1]
 
-[node name="Terrain" type="Node2D" index="0"]
+[node name="TestFloor" type="Node2D" index="0"]
 
 [node name="Floor" parent="." index="0" instance=ExtResource( 1 )]
 
