@@ -3,7 +3,7 @@ extends KinematicBody2D
 # begin constants
 var MAX_RUN_SPEED = 475
 var MAX_FALL_SPEED = 1300
-var MAX_JUMP_TIME = 0.28
+var MAX_JUMP_TIME = 0.21 #0.28
 var RUN_ACCELERATION = 3800
 var JUMP_SPEED = 1000
 var GRAVITY = 5500
@@ -16,6 +16,16 @@ onready var revolving_chambers = get_node("RevolvingChambers")
 onready var bullets_container = get_node("Bullets")
 onready var sprites = get_node("Sprites")
 onready var health_counter = get_node("HealthCounter")
+onready var raycast_grounded_0 = get_node("RaycastGrounded0")
+onready var raycast_grounded_1 = get_node("RaycastGrounded1")
+onready var raycast_jumpstop_0 = get_node("RaycastJumpstop0")
+onready var raycast_jumpstop_1 = get_node("RaycastJumpstop1")
+onready var raycast_walljump_left_0 = get_node("RaycastWalljumpLeft0")
+onready var raycast_walljump_left_1 = get_node("RaycastWalljumpLeft1")
+onready var raycast_walljump_right_0 = get_node("RaycastWalljumpRight0")
+onready var raycast_walljump_right_1 = get_node("RaycastWalljumpRight1")
+
+
 
 var move_vector
 var jump_timer
@@ -41,7 +51,7 @@ func _init():
 
 func setup(new_input_interpreter):
 	input_interpreter = new_input_interpreter
-	health_counter._initialize(3)
+	health_counter._initialize(5)
 
 func _ready():
 	is_active = true
@@ -97,7 +107,9 @@ func move(direction, delta):
 
 	if(jump_timer > MAX_JUMP_TIME):
 		jump_ended = true
-
+	else: if (check_if_jumpstop()):
+		jump_ended = true
+		move_vector = Vector2( move_vector.x, 0)
 	if(check_if_grounded()):
 		grounded_lock = true
 		jump_timer = 0
@@ -120,6 +132,11 @@ func move(direction, delta):
 		if(input_interpreter.jump_hold() and !jump_ended):
 			vertical_speed = JUMP_SPEED * -1
 			jump_timer += delta
+		else: if(input_interpreter.jump_begin()):
+			if(check_if_flush_right()):
+				print ("WALL JUMP TO THE LEFT")
+			else: if(check_if_flush_left()):
+				print ("WALL JUMP TO THE RIGHT")
 		else:
 #			if(!grounded_lock): # TODO: Investigate this conditional's potential adverse effects on vertical movement  
 				vertical_speed = (move_vector.y + GRAVITY * delta) # this calculates velocity with turnaround time
@@ -138,15 +155,31 @@ func select_option(position):
 	
 func check_if_grounded():
 	var is_grounded = false
-	var raycast_grounded_0 = get_node("RaycastGrounded0")
-	var raycast_grounded_1 = get_node("RaycastGrounded1")
-	
 	var is_colliding_0 = raycast_grounded_0.is_colliding()
 	var is_colliding_1 = raycast_grounded_1.is_colliding()
-	
 	is_grounded = is_colliding_0 and is_colliding_1
-	
 	return is_grounded
+	
+func check_if_jumpstop():
+	var jumpstop = false
+	var is_colliding_0 = raycast_jumpstop_0.is_colliding()
+	var is_colliding_1 = raycast_jumpstop_1.is_colliding()
+	jumpstop = is_colliding_0 and is_colliding_1
+	return jumpstop
+
+func check_if_flush_right():
+	var is_flush = false
+	var is_colliding_0 = raycast_walljump_right_0.is_colliding()
+	var is_colliding_1 = raycast_walljump_right_1.is_colliding()
+	is_flush = is_colliding_0 and is_colliding_1
+	return is_flush
+
+func check_if_flush_left():
+	var is_flush = false
+	var is_colliding_0 = raycast_walljump_left_0.is_colliding()
+	var is_colliding_1 = raycast_walljump_left_1.is_colliding()
+	is_flush = is_colliding_0 and is_colliding_1
+	return is_flush
 	
 func shoot_bullet():
 	if(revolving_chambers.fire()):
