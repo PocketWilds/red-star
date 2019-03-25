@@ -15,6 +15,7 @@ onready var bullet_scene = preload("../scenes/Bullet.tscn")
 onready var revolving_chambers = get_node("RevolvingChambers")
 onready var bullets_container = get_node("Bullets")
 onready var sprites = get_node("Sprites")
+onready var health_counter = get_node("HealthCounter")
 
 var move_vector
 var jump_timer
@@ -40,6 +41,7 @@ func _init():
 
 func setup(new_input_interpreter):
 	input_interpreter = new_input_interpreter
+	health_counter._initialize(3)
 
 func _ready():
 	is_active = true
@@ -52,6 +54,7 @@ func _process(delta):
 
 func _physics_process(delta):
 	move(_read_inputs(), delta)	
+	print(health_counter.health_current)
 	pass
 	
 func _read_inputs():
@@ -173,3 +176,6 @@ func shoot_bullet():
 			bullet_sprite_debug.set_flip_h(true)
 	else:
 		pass
+		
+func take_damage(amount):
+	health_counter.modify_health(amount * -1)
