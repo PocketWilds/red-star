@@ -54,7 +54,6 @@ func _process(delta):
 
 func _physics_process(delta):
 	move(_read_inputs(), delta)	
-	print(health_counter.health_current)
 	pass
 	
 func _read_inputs():
@@ -117,6 +116,7 @@ func move(direction, delta):
 		horizontal_speed = MAX_RUN_SPEED * direction
 		if(input_interpreter.jump_release() and !jump_ended):
 			jump_ended = true
+			move_vector =  Vector2(move_vector.x, 0)
 		if(input_interpreter.jump_hold() and !jump_ended):
 			vertical_speed = JUMP_SPEED * -1
 			jump_timer += delta

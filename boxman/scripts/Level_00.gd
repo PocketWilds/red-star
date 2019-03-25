@@ -63,7 +63,7 @@ func toggle_pause():
 		pause()
 
 func pause():
-	get_node("PauseMenu").position = camera_main.position
+	get_node("PauseMenu").position = camera_main.get_camera_screen_center()
 	cursor_pos = 0
 	move_cursor(cursor_pos)
 	get_node("PausableObjects").get_tree().paused = true
