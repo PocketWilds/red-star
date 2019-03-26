@@ -37,6 +37,7 @@ var jump_ended
 var modifier_directional_vector
 var is_angle_up
 var is_angle_down
+var is_wall_jump
 #var 
 
 func _init():
@@ -47,6 +48,7 @@ func _init():
 	modifier_directional_vector = 1
 	is_angle_up = false
 	is_angle_down = false
+	is_wall_jump = false
 	pass
 
 func setup(new_input_interpreter):
@@ -112,6 +114,7 @@ func move(direction, delta):
 		move_vector = Vector2( move_vector.x, 0)
 	if(check_if_grounded()):
 		grounded_lock = true
+		is_wall_jump = false
 		jump_timer = 0
 		horizontal_speed = (move_vector.x + direction * RUN_ACCELERATION * delta) * (direction * direction) # this calculates velocity with turnaround time
 		horizontal_speed = (sqrt(move_vector.x * move_vector.x) + RUN_ACCELERATION * delta) * direction * (direction * direction) # while this calculates with no turnaround time
@@ -125,7 +128,11 @@ func move(direction, delta):
 			grounded_lock = true
 			jump_ended	= true
 	else:
-		horizontal_speed = MAX_RUN_SPEED * direction
+		if(is_wall_jump):
+			horizontal_speed = move_vector.x
+		else:
+			horizontal_speed = clamp(MAX_RUN_SPEED * direction, MAX_RUN_SPEED * -1, MAX_RUN_SPEED)
+			
 		if(input_interpreter.jump_release() and !jump_ended):
 			jump_ended = true
 			move_vector =  Vector2(move_vector.x, 0)
@@ -134,9 +141,29 @@ func move(direction, delta):
 			jump_timer += delta
 		else: if(input_interpreter.jump_begin()):
 			if(check_if_flush_right()):
+				is_wall_jump = true
+				if(input_interpreter.move_right()):
+					horizontal_speed = -400
+					vertical_speed = -4200
+				else: if(input_interpreter.move_left()):
+					horizontal_speed = -1100
+					vertical_speed = -3000
+				else:
+					horizontal_speed = -750
+					vertical_speed = -3800
 				print ("WALL JUMP TO THE LEFT")
 			else: if(check_if_flush_left()):
+				if(input_interpreter.move_left()):
+					horizontal_speed = 400
+					vertical_speed = -4200
+				else: if(input_interpreter.move_right()):
+					horizontal_speed = 1100
+					vertical_speed = -3000
+				else:
+					horizontal_speed = 750
+					vertical_speed = -3800
 				print ("WALL JUMP TO THE RIGHT")
+				is_wall_jump =true
 		else:
 #			if(!grounded_lock): # TODO: Investigate this conditional's potential adverse effects on vertical movement  
 				vertical_speed = (move_vector.y + GRAVITY * delta) # this calculates velocity with turnaround time
