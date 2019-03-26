@@ -1,12 +1,14 @@
 extends KinematicBody2D
 
 # begin constants
-var MAX_RUN_SPEED = 475
-var MAX_FALL_SPEED = 1300
-var MAX_JUMP_TIME = 0.21 #0.28
-var RUN_ACCELERATION = 3800
-var JUMP_SPEED = 1000
-var GRAVITY = 5500
+const MAX_RUN_SPEED = 475
+const WALLJUMP_AIR_ADJUST_ACCEL = 1000
+const WALLJUMP_MAX_SPEED = 1250
+const MAX_FALL_SPEED = 1300
+const MAX_JUMP_TIME = 0.21 #0.28
+const RUN_ACCELERATION = 3800
+const JUMP_SPEED = 1000
+const GRAVITY = 5500
 # end constants
 
 var input_interpreter
@@ -129,7 +131,7 @@ func move(direction, delta):
 			jump_ended	= true
 	else:
 		if(is_wall_jump):
-			horizontal_speed = move_vector.x
+			horizontal_speed = clamp(move_vector.x + WALLJUMP_AIR_ADJUST_ACCEL * delta * direction, WALLJUMP_MAX_SPEED * -1, WALLJUMP_MAX_SPEED)
 		else:
 			horizontal_speed = clamp(MAX_RUN_SPEED * direction, MAX_RUN_SPEED * -1, MAX_RUN_SPEED)
 			
@@ -151,7 +153,6 @@ func move(direction, delta):
 				else:
 					horizontal_speed = -750
 					vertical_speed = -3800
-				print ("WALL JUMP TO THE LEFT")
 			else: if(check_if_flush_left()):
 				if(input_interpreter.move_left()):
 					horizontal_speed = 400
@@ -162,8 +163,7 @@ func move(direction, delta):
 				else:
 					horizontal_speed = 750
 					vertical_speed = -3800
-				print ("WALL JUMP TO THE RIGHT")
-				is_wall_jump =true
+				is_wall_jump = true
 		else:
 #			if(!grounded_lock): # TODO: Investigate this conditional's potential adverse effects on vertical movement  
 				vertical_speed = (move_vector.y + GRAVITY * delta) # this calculates velocity with turnaround time
