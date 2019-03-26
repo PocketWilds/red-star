@@ -107,7 +107,7 @@ func _read_inputs():
 
 func move(direction, delta):
 	var horizontal_speed
-	var vertical_speed = 0
+	var vertical_speed = move_vector.y
 
 	if(jump_timer > MAX_JUMP_TIME):
 		jump_ended = true
@@ -134,7 +134,6 @@ func move(direction, delta):
 			horizontal_speed = clamp(move_vector.x + WALLJUMP_AIR_ADJUST_ACCEL * delta * direction, WALLJUMP_MAX_SPEED * -1, WALLJUMP_MAX_SPEED)
 		else:
 			horizontal_speed = clamp(MAX_RUN_SPEED * direction, MAX_RUN_SPEED * -1, MAX_RUN_SPEED)
-			
 		if(input_interpreter.jump_release() and !jump_ended):
 			jump_ended = true
 			move_vector =  Vector2(move_vector.x, 0)
@@ -154,6 +153,7 @@ func move(direction, delta):
 					horizontal_speed = -750
 					vertical_speed = -3800
 			else: if(check_if_flush_left()):
+				is_wall_jump = true
 				if(input_interpreter.move_left()):
 					horizontal_speed = 400
 					vertical_speed = -4200
@@ -163,7 +163,6 @@ func move(direction, delta):
 				else:
 					horizontal_speed = 750
 					vertical_speed = -3800
-				is_wall_jump = true
 		else:
 #			if(!grounded_lock): # TODO: Investigate this conditional's potential adverse effects on vertical movement  
 				vertical_speed = (move_vector.y + GRAVITY * delta) # this calculates velocity with turnaround time
