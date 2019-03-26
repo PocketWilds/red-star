@@ -5,7 +5,7 @@
 [ext_resource path="res://images/backgrounds/title_menu.png" type="Texture" id=3]
 [ext_resource path="res://scenes/InputInterpreter.tscn" type="PackedScene" id=4]
 
-[node name="TitleScreen" type="Node" index="0"]
+[node name="TitleScreen" type="Node"]
 
 script = ExtResource( 1 )
 

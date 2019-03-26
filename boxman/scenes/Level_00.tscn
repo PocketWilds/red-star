@@ -55,9 +55,64 @@ _sections_unfolded = [ "Transform" ]
 position = Vector2( 1654, 800 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="TestWall0" parent="PausableObjects/Terrain" index="3" instance=ExtResource( 6 )]
+[node name="TestFloor3" parent="PausableObjects/Terrain" index="3" instance=ExtResource( 5 )]
 
-position = Vector2( 1700, 200 )
+position = Vector2( 2256, 800 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestFloor4" parent="PausableObjects/Terrain" index="4" instance=ExtResource( 5 )]
+
+position = Vector2( 2858, 800 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestWall0" parent="PausableObjects/Terrain" index="5" instance=ExtResource( 6 )]
+
+position = Vector2( 1938, 47 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestWall1" parent="PausableObjects/Terrain" index="6" instance=ExtResource( 6 )]
+
+position = Vector2( 1938, 335 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestWall2" parent="PausableObjects/Terrain" index="7" instance=ExtResource( 6 )]
+
+position = Vector2( 1938, 595 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestWall6" parent="PausableObjects/Terrain" index="8" instance=ExtResource( 6 )]
+
+position = Vector2( 1852, 235 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestWall7" parent="PausableObjects/Terrain" index="9" instance=ExtResource( 6 )]
+
+position = Vector2( 1766, 385 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestWall8" parent="PausableObjects/Terrain" index="10" instance=ExtResource( 6 )]
+
+position = Vector2( 1680, 513 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestWall9" parent="PausableObjects/Terrain" index="11" instance=ExtResource( 6 )]
+
+position = Vector2( 1594, 663 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestWall3" parent="PausableObjects/Terrain" index="12" instance=ExtResource( 6 )]
+
+position = Vector2( 3116, 595 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestWall4" parent="PausableObjects/Terrain" index="13" instance=ExtResource( 6 )]
+
+position = Vector2( 3116, 307 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TestWall5" parent="PausableObjects/Terrain" index="14" instance=ExtResource( 6 )]
+
+position = Vector2( 3116, 45 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="CameraMain" type="Camera2D" parent="PausableObjects" index="3"]
