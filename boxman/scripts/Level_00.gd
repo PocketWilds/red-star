@@ -20,8 +20,6 @@ func _ready():
 #	get_node("PausableObjects/Bullet")._initialize(Vector2(1,0), Vector2(0,0))
 	pass
 
-
-
 func _process(delta):
 	read_inputs() # TODO: not really sure why but if I move this to _physics_process, I can't exit to title screen.  Want to.  Investigate later
 	pass

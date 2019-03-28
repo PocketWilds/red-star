@@ -27,12 +27,11 @@ onready var raycast_walljump_left_1 = get_node("RaycastWalljumpLeft1")
 onready var raycast_walljump_right_0 = get_node("RaycastWalljumpRight0")
 onready var raycast_walljump_right_1 = get_node("RaycastWalljumpRight1")
 
-
-
 var move_vector
 var jump_timer
 
 var is_active
+var is_incapped
 var grounded_lock
 var fire_lock
 var jump_ended
@@ -40,10 +39,10 @@ var modifier_directional_vector
 var is_angle_up
 var is_angle_down
 var is_wall_jump
-#var 
 
 func _init():
 	is_active = false
+	is_incapped = false
 	grounded_lock = false
 	jump_ended = true
 	jump_timer = 0
@@ -67,7 +66,10 @@ func _process(delta):
 	pass
 
 func _physics_process(delta):
-	move(_read_inputs(), delta)	
+	if(health_counter.health_current == 0):
+		incapped_sequence()
+	else:
+		move(_read_inputs(), delta)	
 	pass
 	
 func _read_inputs():
@@ -81,7 +83,7 @@ func _read_inputs():
 	else: if(input_interpreter.move_right()):
 		modifier_directional_vector = 1
 		if(sprites.is_flipped_h()):
-			sprites.set_flip_h(false)			
+			sprites.set_flip_h(false)
 			for sprite in sprites.get_children():
 				sprite.set_flip_h(false)
 	else:
@@ -238,3 +240,14 @@ func shoot_bullet():
 		
 func take_damage(amount):
 	health_counter.modify_health(amount * -1)
+	
+func incapped_sequence():
+	self.visible = false
+	
+func respawn(spawn_position):
+	self.position = spawn_position
+
+func _on_HitboxPlayer_area_entered(area):
+	var colliding_area_name = area.name
+	if(colliding_area_name == "HitboxDummy"):
+		take_damage(1)

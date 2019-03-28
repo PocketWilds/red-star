@@ -9,14 +9,10 @@
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Bullet" type="KinematicBody2D" index="0"]
+[node name="Bullet" type="Node2D"]
 
-input_pickable = false
-collision_layer = 1
-collision_mask = 1
-collision/safe_margin = 0.08
 script = ExtResource( 1 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
@@ -24,6 +20,7 @@ texture = ExtResource( 2 )
 
 [node name="debug_direction" type="Sprite" parent="Sprite" index="0"]
 
+visible = false
 scale = Vector2( 0.2, 0.2 )
 z_index = 1
 texture = ExtResource( 3 )
@@ -35,7 +32,7 @@ position = Vector2( -12, 12 )
 enabled = false
 exclude_parent = true
 cast_to = Vector2( 0, 0 )
-collision_mask = 1
+collision_mask = 2
 _sections_unfolded = [ "Transform" ]
 
 [node name="RayCast2D_1" type="RayCast2D" parent="." index="2"]
@@ -44,14 +41,25 @@ position = Vector2( -12, -12 )
 enabled = false
 exclude_parent = true
 cast_to = Vector2( 0, 0 )
-collision_mask = 1
+collision_mask = 2
 _sections_unfolded = [ "Transform" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="3"]
+[node name="HitboxBullet" type="Area2D" parent="." index="3"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxBullet" index="0"]
 
 scale = Vector2( 1.2, 1.2 )
 shape = SubResource( 1 )
-disabled = true
 _sections_unfolded = [ "Transform" ]
+
+[connection signal="area_shape_entered" from="HitboxBullet" to="." method="_on_HitboxBullet_area_shape_entered"]
 
 
