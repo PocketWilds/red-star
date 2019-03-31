@@ -29,6 +29,7 @@ onready var raycast_walljump_right_1 = get_node("RaycastWalljumpRight1")
 
 var move_vector
 var jump_timer
+var quickdraw_timer
 
 var is_active
 var is_incapped
@@ -46,6 +47,7 @@ func _init():
 	grounded_lock = false
 	jump_ended = true
 	jump_timer = 0
+	quickdraw_timer = 0
 	modifier_directional_vector = 1
 	is_angle_up = false
 	is_angle_down = false
@@ -69,10 +71,15 @@ func _physics_process(delta):
 	if(health_counter.health_current == 0):
 		incapped_sequence()
 	else:
-		move(_read_inputs(), delta)	
+		move(_read_inputs(delta), delta)	
 	pass
 	
-func _read_inputs():
+func _read_inputs(delta):
+	if(input_interpreter.input_monitored()):
+		quickdraw_timer += delta
+	else:
+		quickdraw_timer = 0
+	
 	var is_moving_h = true
 	if(input_interpreter.move_left()):
 		modifier_directional_vector = -1

@@ -38,3 +38,6 @@ func angle_up():
 	
 func angle_down():
 	return Input.is_action_pressed("aim_down") and !Input.is_action_pressed("aim_up")
+	
+func no_input():
+	return Input.is_action_pressed("input_monitored")
